@@ -2,7 +2,7 @@
 namespace TYPO3\Base\Core\ViewHelper;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3 Flow package "Base".              luid    *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -10,8 +10,6 @@ namespace TYPO3\Base\Core\ViewHelper;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-
-use TYPO3\Flow\Annotations as Flow;
 
 /**
  * The abstract base class for all view helpers.
@@ -27,7 +25,7 @@ abstract class AbstractViewHelper {
 	private $argumentsInitialized = FALSE;
 
 	/**
-	 * Stores all \TYPO3\Fluid\ArgumentDefinition instances
+	 * Stores all \TYPO3\Base\ArgumentDefinition instances
 	 * @var array
 	 */
 	private $argumentDefinitions = array();
@@ -44,7 +42,7 @@ abstract class AbstractViewHelper {
 
 	/**
 	 * Current view helper node
-	 * @var \TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode
+	 * @var \TYPO3\Base\Core\Parser\SyntaxTree\ViewHelperNode
 	 */
 	private $viewHelperNode;
 
@@ -57,20 +55,14 @@ abstract class AbstractViewHelper {
 
 	/**
 	 * Current variable container reference.
-	 * @var \TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer
+	 * @var \TYPO3\Base\Core\ViewHelper\TemplateVariableContainer
 	 * @api
 	 */
 	protected $templateVariableContainer;
 
+	
 	/**
-	 * Controller Context to use
-	 * @var \TYPO3\Flow\Mvc\Controller\ControllerContext
-	 * @api
-	 */
-	protected $controllerContext;
-
-	/**
-	 * @var \TYPO3\Fluid\Core\Rendering\RenderingContextInterface
+	 * @var \TYPO3\Base\Core\Rendering\RenderingContextInterface
 	 */
 	protected $renderingContext;
 
@@ -81,26 +73,12 @@ abstract class AbstractViewHelper {
 
 	/**
 	 * ViewHelper Variable Container
-	 * @var \TYPO3\Fluid\Core\ViewHelper\ViewHelperVariableContainer
+	 * @var \TYPO3\Base\Core\ViewHelper\ViewHelperVariableContainer
 	 * @api
 	 */
 	protected $viewHelperVariableContainer;
 
-	/**
-	 * Reflection service
-	 * @var \TYPO3\Flow\Reflection\ReflectionService
-	 */
-	protected $reflectionService;
-
-	/**
-	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
-	 */
-	protected $objectManager;
-
-	/**
-	 * @var \TYPO3\Flow\Log\SystemLoggerInterface
-	 */
-	protected $systemLogger;
+	
 
 	/**
 	 * With this flag, you can disable the escaping interceptor inside this ViewHelper.
@@ -109,21 +87,7 @@ abstract class AbstractViewHelper {
 	 */
 	protected $escapingInterceptorEnabled = TRUE;
 
-	/**
-	 * @param \TYPO3\Flow\Object\ObjectManagerInterface $objectManager
-	 * @return void
-	 */
-	public function injectObjectManager(\TYPO3\Flow\Object\ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
-	}
-
-	/**
-	 * @param \TYPO3\Flow\Log\SystemLoggerInterface $systemLogger
-	 * @return void
-	 */
-	public function injectSystemLogger(\TYPO3\Flow\Log\SystemLoggerInterface $systemLogger) {
-		$this->systemLogger = $systemLogger;
-	}
+	
 
 	/**
 	 * @param array $arguments
@@ -134,10 +98,10 @@ abstract class AbstractViewHelper {
 	}
 
 	/**
-	 * @param \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @param \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext
 	 * @return void
 	 */
-	public function setRenderingContext(\TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
+	public function setRenderingContext(\TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext) {
 		$this->renderingContext = $renderingContext;
 		$this->templateVariableContainer = $renderingContext->getTemplateVariableContainer();
 		if ($renderingContext->getControllerContext() !== NULL) {
@@ -146,13 +110,7 @@ abstract class AbstractViewHelper {
 		$this->viewHelperVariableContainer = $renderingContext->getViewHelperVariableContainer();
 	}
 
-	/**
-	 * Inject a Reflection service
-	 * @param \TYPO3\Flow\Reflection\ReflectionService $reflectionService Reflection service
-	 */
-	public function injectReflectionService(\TYPO3\Flow\Reflection\ReflectionService $reflectionService) {
-		$this->reflectionService = $reflectionService;
-	}
+	
 
 	/**
 	 * Returns whether the escaping interceptor should be disabled or enabled inside the tags contents.
@@ -174,15 +132,15 @@ abstract class AbstractViewHelper {
 	 * @param string $description Description of the argument
 	 * @param boolean $required If TRUE, argument is required. Defaults to FALSE.
 	 * @param mixed $defaultValue Default value of argument
-	 * @return \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper $this, to allow chaining.
+	 * @return \TYPO3\Base\Core\ViewHelper\AbstractViewHelper $this, to allow chaining.
 	 * @throws Exception
 	 * @api
 	 */
 	protected function registerArgument($name, $type, $description, $required = FALSE, $defaultValue = NULL) {
 		if (array_key_exists($name, $this->argumentDefinitions)) {
-			throw new \TYPO3\Fluid\Core\ViewHelper\Exception('Argument "' . $name . '" has already been defined, thus it should not be defined again.', 1253036401);
+			throw new \TYPO3\Base\Core\ViewHelper\Exception('Argument "' . $name . '" has already been defined, thus it should not be defined again.', 1253036401);
 		}
-		$this->argumentDefinitions[$name] = new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition($name, $type, $description, $required, $defaultValue);
+		$this->argumentDefinitions[$name] = new \TYPO3\Base\Core\ViewHelper\ArgumentDefinition($name, $type, $description, $required, $defaultValue);
 		return $this;
 	}
 
@@ -196,15 +154,15 @@ abstract class AbstractViewHelper {
 	 * @param string $description Description of the argument
 	 * @param boolean $required If TRUE, argument is required. Defaults to FALSE.
 	 * @param mixed $defaultValue Default value of argument
-	 * @return \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper $this, to allow chaining.
+	 * @return \TYPO3\Base\Core\ViewHelper\AbstractViewHelper $this, to allow chaining.
 	 * @throws Exception
 	 * @api
 	 */
 	protected function overrideArgument($name, $type, $description, $required = FALSE, $defaultValue = NULL) {
 		if (!array_key_exists($name, $this->argumentDefinitions)) {
-			throw new \TYPO3\Fluid\Core\ViewHelper\Exception('Argument "' . $name . '" has not been defined, thus it can\'t be overridden.', 1279212461);
+			throw new \TYPO3\Base\Core\ViewHelper\Exception('Argument "' . $name . '" has not been defined, thus it can\'t be overridden.', 1279212461);
 		}
-		$this->argumentDefinitions[$name] = new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition($name, $type, $description, $required, $defaultValue);
+		$this->argumentDefinitions[$name] = new \TYPO3\Base\Core\ViewHelper\ArgumentDefinition($name, $type, $description, $required, $defaultValue);
 		return $this;
 	}
 
@@ -213,10 +171,10 @@ abstract class AbstractViewHelper {
 	 * framework. Populates $this->viewHelperNode.
 	 * This is PURELY INTERNAL! Never override this method!!
 	 *
-	 * @param \TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode $node View Helper node to be set.
+	 * @param \TYPO3\Base\Core\Parser\SyntaxTree\ViewHelperNode $node View Helper node to be set.
 	 * @return void
 	 */
-	public function setViewHelperNode(\TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode $node) {
+	public function setViewHelperNode(\TYPO3\Base\Core\Parser\SyntaxTree\ViewHelperNode $node) {
 		$this->viewHelperNode = $node;
 	}
 
@@ -258,11 +216,11 @@ abstract class AbstractViewHelper {
 
 		try {
 			return call_user_func_array(array($this, 'render'), $renderMethodParameters);
-		} catch (\TYPO3\Fluid\Core\ViewHelper\Exception $exception) {
+		} catch (\TYPO3\Base\Core\ViewHelper\Exception $exception) {
 			if (!$this->objectManager->getContext()->isProduction()) {
 				throw $exception;
 			} else {
-				$this->systemLogger->log('An Exception was captured: '. $exception->getMessage() . '(' . $exception->getCode() . ')', LOG_ERR, 'TYPO3.Fluid', get_class($this));
+				$this->systemLogger->log('An Exception was captured: '. $exception->getMessage() . '(' . $exception->getCode() . ')', LOG_ERR, 'TYPO3.Base', get_class($this));
 				return '';
 			}
 		}
@@ -312,7 +270,7 @@ abstract class AbstractViewHelper {
 	/**
 	 * Initialize all arguments and return them
 	 *
-	 * @return array Array of \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition instances.
+	 * @return array Array of \TYPO3\Base\Core\ViewHelper\ArgumentDefinition instances.
 	 */
 	public function prepareArguments() {
 		if (!$this->argumentsInitialized) {
@@ -333,7 +291,7 @@ abstract class AbstractViewHelper {
 	 * Register method arguments for "render" by analysing the doc comment above.
 	 *
 	 * @return void
-	 * @throws \TYPO3\Fluid\Core\Parser\Exception
+	 * @throws \TYPO3\Base\Core\Parser\Exception
 	 */
 	private function registerRenderMethodArguments() {
 		$methodParameters = $this->reflectionService->getMethodParameters(get_class($this), 'render');
@@ -341,7 +299,7 @@ abstract class AbstractViewHelper {
 			return;
 		}
 
-		if (\TYPO3\Fluid\Fluid::$debugMode) {
+		if (\TYPO3\Base\Base::$debugMode) {
 			$methodTags = $this->reflectionService->getMethodTagsValues(get_class($this), 'render');
 
 			$paramAnnotations = array();
@@ -359,11 +317,11 @@ abstract class AbstractViewHelper {
 				$dataType = 'array';
 			}
 			if ($dataType === NULL) {
-				throw new \TYPO3\Fluid\Core\Parser\Exception('could not determine type of argument "' . $parameterName . '" of the render-method in ViewHelper "' . get_class($this) . '". Either the methods docComment is invalid or some PHP optimizer strips off comments.', 1242292003);
+				throw new \TYPO3\Base\Core\Parser\Exception('could not determine type of argument "' . $parameterName . '" of the render-method in ViewHelper "' . get_class($this) . '". Either the methods docComment is invalid or some PHP optimizer strips off comments.', 1242292003);
 			}
 
 			$description = '';
-			if (\TYPO3\Fluid\Fluid::$debugMode && isset($paramAnnotations[$i])) {
+			if (\TYPO3\Base\Base::$debugMode && isset($paramAnnotations[$i])) {
 				$explodedAnnotation = explode(' ', $paramAnnotations[$i]);
 				array_shift($explodedAnnotation);
 				array_shift($explodedAnnotation);
@@ -373,7 +331,7 @@ abstract class AbstractViewHelper {
 			if (isset($parameterInfo['defaultValue'])) {
 				$defaultValue = $parameterInfo['defaultValue'];
 			}
-			$this->argumentDefinitions[$parameterName] = new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition($parameterName, $dataType, $description, ($parameterInfo['optional'] === FALSE), $defaultValue, TRUE);
+			$this->argumentDefinitions[$parameterName] = new \TYPO3\Base\Core\ViewHelper\ArgumentDefinition($parameterName, $dataType, $description, ($parameterInfo['optional'] === FALSE), $defaultValue, TRUE);
 			$i++;
 		}
 	}
@@ -460,12 +418,12 @@ abstract class AbstractViewHelper {
 	 * @param string $argumentsVariableName
 	 * @param string $renderChildrenClosureVariableName
 	 * @param string $initializationPhpCode
-	 * @param \TYPO3\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode
-	 * @param \TYPO3\Fluid\Core\Compiler\TemplateCompiler $templateCompiler
+	 * @param \TYPO3\Base\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode
+	 * @param \TYPO3\Base\Core\Compiler\TemplateCompiler $templateCompiler
 	 * @return string
-	 * @see \TYPO3\Fluid\Core\ViewHelper\Facets\CompilableInterface
+	 * @see \TYPO3\Base\Core\ViewHelper\Facets\CompilableInterface
 	 */
-	public function compile($argumentsVariableName, $renderChildrenClosureVariableName, &$initializationPhpCode, \TYPO3\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode, \TYPO3\Fluid\Core\Compiler\TemplateCompiler $templateCompiler) {
+	public function compile($argumentsVariableName, $renderChildrenClosureVariableName, &$initializationPhpCode, \TYPO3\Base\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode, \TYPO3\Base\Core\Compiler\TemplateCompiler $templateCompiler) {
 		return sprintf('%s::renderStatic(%s, %s, $renderingContext)',
 				get_class($this), $argumentsVariableName, $renderChildrenClosureVariableName);
 	}
@@ -476,11 +434,11 @@ abstract class AbstractViewHelper {
 	 *
 	 * @param array $arguments
 	 * @param \Closure $renderChildrenClosure
-	 * @param \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @param \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext
 	 * @return mixed
-	 * @see \TYPO3\Fluid\Core\ViewHelper\Facets\CompilableInterface
+	 * @see \TYPO3\Base\Core\ViewHelper\Facets\CompilableInterface
 	 */
-	static public function renderStatic(array $arguments, \Closure $renderChildrenClosure, \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
+	static public function renderStatic(array $arguments, \Closure $renderChildrenClosure, \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext) {
 		return NULL;
 	}
 
