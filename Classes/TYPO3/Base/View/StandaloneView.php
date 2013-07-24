@@ -21,7 +21,7 @@ namespace TYPO3\Base\View;
 *
 * @api
 */
-class StandaloneView extends \TYPO3\Base\View\AbstractTemplateView {
+abstract class StandaloneView extends \TYPO3\Fluid\View\AbstractTemplateView {
 
   /**
 * Source code of the Fluid template
@@ -46,6 +46,21 @@ protected $layoutRootPath = NULL;
 * @var string
 */
 protected $partialRootPath = NULL;
+
+/**
+* @var \TYPO3\Fluid\Core\Compiler\TemplateCompiler
+*/
+protected $templateCompiler;
+
+/**
+* @var String
+*/
+protected $environment;
+
+/**
+* @var String
+*/
+protected $flashMessageContainer;
 
 /**
 * @var String
