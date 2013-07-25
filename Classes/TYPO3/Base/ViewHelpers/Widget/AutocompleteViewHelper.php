@@ -31,11 +31,7 @@ class AutocompleteViewHelper extends \TYPO3\Fluid\Core\Widget\AbstractWidgetView
 	 */
 	protected $ajaxWidget = TRUE;
 
-	/**
-	 * @Flow\Inject
-	 * @var \TYPO3\Fluid\ViewHelpers\Widget\Controller\AutocompleteController
-	 */
-	protected $controller;
+	
 
 	/**
 	 * @param \TYPO3\Fluid\ViewHelpers\Widget\Controller\AutocompleteController $controller
