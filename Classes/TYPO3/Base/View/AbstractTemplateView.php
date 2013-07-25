@@ -26,10 +26,7 @@ abstract class AbstractTemplateView {
 	const RENDERING_LAYOUT = 3;
 
 	
-	/**
-	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
-	 */
-	protected $objectManager;
+	
 
 	/**
 	 * @var \TYPO3\Fluid\Core\Parser\TemplateParser
