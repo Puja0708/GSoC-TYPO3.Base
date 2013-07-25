@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\ViewHelpers\Format;
+namespace TYPO3\Base\ViewHelpers\Format;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Fluid".                 *
