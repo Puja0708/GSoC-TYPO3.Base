@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\ViewHelpers\Form;
+namespace TYPO3\Base\ViewHelpers\Form;
 
 /*                                                                        *
  * This script belongs to the Flow package "TYPO3.Fluid".                *
