@@ -401,5 +401,7 @@ $templateIdentifier = sprintf('Standalone_%s_%s', $prefix, sha1($pathAndFilename
 $templateIdentifier = str_replace('/', '_', str_replace('.', '_', $templateIdentifier));
 return $templateIdentifier;
 }
+
+
 }
 ?>
