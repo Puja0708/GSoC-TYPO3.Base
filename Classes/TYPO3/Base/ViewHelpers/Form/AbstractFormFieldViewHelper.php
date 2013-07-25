@@ -114,66 +114,7 @@ abstract class AbstractFormFieldViewHelper extends \TYPO3\Fluid\ViewHelpers\Form
 		return ($validationResults !== NULL && $validationResults->hasErrors());
 	}
 
-	/**
-	 * Get the form data which has last been submitted; only returns valid data in case
-	 * a property mapping error has occured. Check with hasMappingErrorOccured() before!
-	 *
-	 * @return mixed
-	 */
-	protected function getLastSubmittedFormData() {
-		$value = NULL;
-		$submittedArguments = $this->controllerContext->getRequest()->getInternalArgument('__submittedArguments');
-		if ($submittedArguments !== NULL) {
-			$propertyPath = rtrim(preg_replace('/(\]\[|\[|\])/', '.', $this->getNameWithoutPrefix()), '.');
-			$value = \TYPO3\Flow\Reflection\ObjectAccess::getPropertyPath($submittedArguments, $propertyPath);
-		}
-		return $value;
-	}
-
-	/**
-	 * Add additional identity properties in case the current property is hierarchical (of the form "bla.blubb").
-	 * Then, [bla][__identity] has to be generated as well.
-	 *
-	 * @return void
-	 */
-	protected function addAdditionalIdentityPropertiesIfNeeded() {
-		$propertySegments = explode('.', $this->arguments['property']);
-		if (count($propertySegments) >= 2) {
-				// hierarchical property. If there is no "." inside (thus $propertySegments == 1), we do not need to do anything
-			$formObject = $this->viewHelperVariableContainer->get('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'formObject');
-
-			$objectName = $this->viewHelperVariableContainer->get('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-				// If Count == 2 -> we need to go through the for-loop exactly once
-			for ($i=1; $i < count($propertySegments); $i++) {
-				$object = \TYPO3\Flow\Reflection\ObjectAccess::getPropertyPath($formObject, implode('.', array_slice($propertySegments, 0, $i)));
-				$objectName .= '[' . $propertySegments[$i-1] . ']';
-				$hiddenIdentityField = $this->renderHiddenIdentityField($object, $objectName);
-
-					// Add the hidden identity field to the ViewHelperVariableContainer
-				$additionalIdentityProperties = $this->viewHelperVariableContainer->get('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'additionalIdentityProperties');
-				$additionalIdentityProperties[$objectName] = $hiddenIdentityField;
-				$this->viewHelperVariableContainer->addOrUpdate('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'additionalIdentityProperties', $additionalIdentityProperties);
-			}
-		}
-	}
-
-	/**
-	 * Get the current property of the object bound to this form.
-	 *
-	 * @return mixed Value
-	 */
-	protected function getPropertyValue() {
-		if (!$this->viewHelperVariableContainer->exists('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'formObject')) {
-			return NULL;
-		}
-		$formObject = $this->viewHelperVariableContainer->get('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'formObject');
-		$propertyName = $this->arguments['property'];
-
-		if (is_array($formObject)) {
-			return isset($formObject[$propertyName]) ? $formObject[$propertyName] : NULL;
-		}
-		return \TYPO3\Flow\Reflection\ObjectAccess::getPropertyPath($formObject, $propertyName);
-	}
+	
 
 	/**
 	 * Internal method which checks if we should evaluate a domain object or just output arguments['name'] and arguments['value']
@@ -207,22 +148,6 @@ abstract class AbstractFormFieldViewHelper extends \TYPO3\Fluid\ViewHelpers\Form
 		}
 	}
 
-	/**
-	 * Get errors for the property and form name of this view helper
-	 *
-	 * @return \TYPO3\Flow\Error\Result
-	 */
-	protected function getMappingResultsForProperty() {
-		if (!$this->isObjectAccessorMode()) {
-			return new \TYPO3\Flow\Error\Result();
-		}
-		$validationResults = $this->controllerContext->getRequest()->getInternalArgument('__submittedArgumentValidationResults');
-		if ($validationResults === NULL) {
-			return new \TYPO3\Flow\Error\Result();
-		}
-		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		return $validationResults->forProperty($formObjectName)->forProperty($this->arguments['property']);
-	}
 
 	/**
 	 * Renders a hidden field with the same name as the element, to make sure the empty value is submitted
