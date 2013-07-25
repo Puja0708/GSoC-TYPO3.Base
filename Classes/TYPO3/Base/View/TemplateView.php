@@ -16,7 +16,7 @@ namespace TYPO3\Base\View;
  *
  * @api
  */
-class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
+abstract class TemplateView extends \TYPO3\Fluid\View\AbstractTemplateView {
 
 	/**
 	 * Pattern to be resolved for "@templateRoot" in the other patterns.
