@@ -11,20 +11,11 @@ namespace TYPO3\Base\Command;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
 
-/**
- * Command controller for Fluid documentation rendering
- *
- * @Flow\Scope("singleton")
- */
-class DocumentationCommandController extends \TYPO3\Flow\Cli\CommandController {
 
-	/**
-	 * @Flow\Inject
-	 * @var \TYPO3\Fluid\Service\XsdGenerator
-	 */
-	protected $xsdGenerator;
+class DocumentationCommandController {
+
+	
 
 	/**
 	 * Generate Fluid ViewHelper XSD Schema
