@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Form;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3 Flow package "Base ".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,7 +11,7 @@ namespace TYPO3\Base\ViewHelpers\Form;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+
 
 /**
  * This view helper generates a <select> dropdown list for the use with a form.
@@ -97,11 +97,7 @@ use TYPO3\Flow\Annotations as Flow;
  */
 class SelectViewHelper extends \TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper {
 
-	/**
-	 * @Flow\Inject
-	 * @var \TYPO3\Flow\I18n\Translator
-	 */
-	protected $translator;
+	
 
 	/**
 	 * @var string
@@ -191,59 +187,7 @@ class SelectViewHelper extends \TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldVi
 		return $output;
 	}
 
-	/**
-	 * Render the option tags.
-	 *
-	 * @return array an associative array of options, key will be the value of the option tag
-	 * @throws \TYPO3\Fluid\Core\ViewHelper\Exception
-	 */
-	protected function getOptions() {
-		if (!is_array($this->arguments['options']) && !($this->arguments['options'] instanceof \Traversable)) {
-			return array();
-		}
-		$options = array();
-		foreach ($this->arguments['options'] as $key => $value) {
-			if (is_object($value)) {
-				if ($this->hasArgument('optionValueField')) {
-					$key = \TYPO3\Flow\Reflection\ObjectAccess::getPropertyPath($value, $this->arguments['optionValueField']);
-					if (is_object($key)) {
-						if (method_exists($key, '__toString')) {
-							$key = (string)$key;
-						} else {
-							throw new \TYPO3\Fluid\Core\ViewHelper\Exception('Identifying value for object of class "' . get_class($value) . '" was an object.' , 1247827428);
-						}
-					}
-				} elseif ($this->persistenceManager->getIdentifierByObject($value) !== NULL) {
-					$key = $this->persistenceManager->getIdentifierByObject($value);
-				} elseif (method_exists($value, '__toString')) {
-					$key = (string)$value;
-				} else {
-					throw new \TYPO3\Fluid\Core\ViewHelper\Exception('No identifying value for object of class "' . get_class($value) . '" found.' , 1247826696);
-				}
-
-				if ($this->hasArgument('optionLabelField')) {
-					$value = \TYPO3\Flow\Reflection\ObjectAccess::getPropertyPath($value, $this->arguments['optionLabelField']);
-					if (is_object($value)) {
-						if (method_exists($value, '__toString')) {
-							$value = (string)$value;
-						} else {
-							throw new \TYPO3\Fluid\Core\ViewHelper\Exception('Label value for object of class "' . get_class($value) . '" was an object without a __toString() method.' , 1247827553);
-						}
-					}
-				} elseif (method_exists($value, '__toString')) {
-					$value = (string)$value;
-				} elseif ($this->persistenceManager->getIdentifierByObject($value) !== NULL) {
-					$value = $this->persistenceManager->getIdentifierByObject($value);
-				}
-			}
-			$options[$key] = $value;
-		}
-		if ($this->arguments['sortByOptionLabel']) {
-			asort($options);
-		}
-		return $options;
-	}
-
+	
 	/**
 	 * Render the option tags.
 	 *
@@ -282,25 +226,7 @@ class SelectViewHelper extends \TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldVi
 		return $selectedValues;
 	}
 
-	/**
-	 * Get the option value for an object
-	 *
-	 * @param mixed $valueElement
-	 * @return string
-	 */
-	protected function getOptionValueScalar($valueElement) {
-		if (is_object($valueElement)) {
-			if ($this->hasArgument('optionValueField')) {
-				return \TYPO3\Flow\Reflection\ObjectAccess::getPropertyPath($valueElement, $this->arguments['optionValueField']);
-			} elseif ($this->persistenceManager->getIdentifierByObject($valueElement) !== NULL) {
-				return $this->persistenceManager->getIdentifierByObject($valueElement);
-			} else {
-				return (string)$valueElement;
-			}
-		} else {
-			return $valueElement;
-		}
-	}
+	
 
 	/**
 	 * Render one option tag
