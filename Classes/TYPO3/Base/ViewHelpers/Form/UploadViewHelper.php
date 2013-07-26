@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Form;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3 Flow package "Base".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,7 +11,7 @@ namespace TYPO3\Base\ViewHelpers\Form;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+
 
 /**
  * A view helper which generates an <input type="file"> HTML element.
@@ -50,11 +50,7 @@ class UploadViewHelper extends \TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldVi
 	 */
 	protected $tagName = 'input';
 
-	/**
-	 * @var \TYPO3\Flow\Property\PropertyMapper
-	 * @Flow\Inject
-	 */
-	protected $propertyMapper;
+	
 
 	/**
 	 * Initialize the arguments.
@@ -102,22 +98,7 @@ class UploadViewHelper extends \TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldVi
 		return $output;
 	}
 
-	/**
-	 * Returns a previously uploaded resource.
-	 * If errors occurred during property mapping for this property, NULL is returned
-	 *
-	 * @return \TYPO3\Flow\Resource\Resource
-	 */
-	protected function getUploadedResource() {
-		if ($this->getMappingResultsForProperty()->hasErrors()) {
-			return NULL;
-		}
-		$resourceObject = $this->getValue(FALSE);
-		if ($resourceObject instanceof \TYPO3\Flow\Resource\Resource) {
-			return $resourceObject;
-		}
-		return $this->propertyMapper->convert($resourceObject, 'TYPO3\Flow\Resource\Resource');
-	}
+	
 }
 
 
