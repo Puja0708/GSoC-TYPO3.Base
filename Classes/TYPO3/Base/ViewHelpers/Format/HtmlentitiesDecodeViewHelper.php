@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Format;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Base".                      *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -33,7 +33,7 @@ namespace TYPO3\Base\ViewHelpers\Format;
  *
  * @api
  */
-class HtmlentitiesDecodeViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
+class HtmlentitiesDecodeViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Disable the escaping interceptor because otherwise the child nodes would be escaped before this view helper
