@@ -16,7 +16,7 @@ namespace TYPO3\Base\View;
  *
  * @api
  */
-abstract class TemplateView extends \TYPO3\Fluid\View\AbstractTemplateView {
+class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 
 	/**
 	 * Pattern to be resolved for "@templateRoot" in the other patterns.
@@ -151,6 +151,44 @@ abstract class TemplateView extends \TYPO3\Fluid\View\AbstractTemplateView {
 		return $this->createIdentifierForFile($templatePathAndFilename, $prefix);
 	}
 
+	/**
+	 * Resolve the template path and filename for the given action. If $actionName
+	 * is NULL, looks into the current request.
+	 *
+	 * @param string $actionName Name of the action. If NULL, will be taken from request.
+	 * @return string Full path to template
+	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException in case the template was not found
+	 */
+	protected function getTemplateSource($actionName = NULL) {
+		;
+	}
+
+	/**
+	 * Resolve the path and file name of the layout file, based on
+	 * $this->layoutPathAndFilename and $this->layoutPathAndFilenamePattern.
+	 *
+	 * In case a layout has already been set with setLayoutPathAndFilename(),
+	 * this method returns that path, otherwise a path and filename will be
+	 * resolved using the layoutPathAndFilenamePattern.
+	 *
+	 * @param string $layoutName Name of the layout to use. If none given, use "Default"
+	 * @return string Path and filename of layout file
+	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 */
+	protected function getLayoutSource($layoutName = 'Default'){
+		;
+	}
+
+	/**
+	 * Figures out which partial to use.
+	 *
+	 * @param string $partialName The name of the partial
+	 * @return string the full path which should be used. The path definitely exists.
+	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 */
+	protected function getPartialSource($partialName){
+		;
+	}
 	
 
 	/**
