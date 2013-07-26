@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Identity;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Base".           	      *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -38,20 +38,7 @@ class JsonViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
 	 */
 	protected $escapingInterceptorEnabled = FALSE;
 
-	/**
-	 * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
-	 */
-	protected $persistenceManager;
-
-	/**
-	 * Injects the Flow Persistence Manager
-	 *
-	 * @param \TYPO3\Flow\Persistence\PersistenceManagerInterface $persistenceManager
-	 * @return void
-	 */
-	public function injectPersistenceManager(\TYPO3\Flow\Persistence\PersistenceManagerInterface $persistenceManager) {
-		$this->persistenceManager = $persistenceManager;
-	}
+	
 
 	/**
 	 * Renders the output of this view helper
