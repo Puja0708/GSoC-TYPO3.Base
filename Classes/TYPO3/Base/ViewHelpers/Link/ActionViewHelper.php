@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Link;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Base".    	              *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -93,11 +93,7 @@ class ActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractTagBasedView
 			->setAddQueryString($addQueryString)
 			->setArgumentsToBeExcludedFromQueryString($argumentsToBeExcludedFromQueryString)
 			->setFormat($format);
-		try {
-			$uri = $uriBuilder->uriFor($action, $arguments, $controller, $package, $subpackage);
-		} catch (\TYPO3\Flow\Exception $exception) {
-			throw new \TYPO3\Fluid\Core\ViewHelper\Exception($exception->getMessage(), $exception->getCode(), $exception);
-		}
+		
 		$this->tag->addAttribute('href', $uri);
 		$this->tag->setContent($this->renderChildren());
 		$this->tag->forceClosingTag(TRUE);
