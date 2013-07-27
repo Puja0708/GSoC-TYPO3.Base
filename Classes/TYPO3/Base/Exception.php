@@ -11,6 +11,7 @@ namespace TYPO3\Base;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+
 /**
  * The most general Fluid exception.
  *
