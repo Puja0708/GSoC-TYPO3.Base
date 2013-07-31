@@ -16,7 +16,7 @@ namespace TYPO3\Base\View\Exception;
  *
  * @api
  */
-class InvalidTemplateResourceException extends \TYPO3\Fluid\View\Exception {
+class InvalidTemplateResourceException extends \TYPO3\Base\View\Exception {
 }
 
 ?>
