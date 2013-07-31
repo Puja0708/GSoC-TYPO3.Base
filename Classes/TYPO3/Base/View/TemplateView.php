@@ -2,7 +2,7 @@
 namespace TYPO3\Base\View;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3 package "Base".       		          *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -12,7 +12,7 @@ namespace TYPO3\Base\View;
  *                                                                        */
 
 /**
- * The main template view. Should be used as view if you want Fluid Templating
+ * The main template view. Should be used as view if you want Base Templating
  *
  * @api
  */
@@ -95,8 +95,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 */
 	protected $layoutPathAndFilename = NULL;
 
-	//PLACEHOLDER
-	// Here, the backporter can insert a constructor method, which is needed for Fluid v4.
+	
 
 	/**
 	 * Sets the path and name of of the template file. Effectively overrides the
@@ -157,7 +156,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 *
 	 * @param string $actionName Name of the action. If NULL, will be taken from request.
 	 * @return string Full path to template
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException in case the template was not found
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException in case the template was not found
 	 */
 	protected function getTemplateSource($actionName = NULL) {
 		;
@@ -173,7 +172,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 *
 	 * @param string $layoutName Name of the layout to use. If none given, use "Default"
 	 * @return string Path and filename of layout file
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	protected function getLayoutSource($layoutName = 'Default'){
 		;
@@ -184,7 +183,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 *
 	 * @param string $partialName The name of the partial
 	 * @return string the full path which should be used. The path definitely exists.
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	protected function getPartialSource($partialName){
 		;
@@ -197,7 +196,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 *
 	 * @param string $actionName Name of the action. If NULL, will be taken from request.
 	 * @return string Full path to template
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	protected function getTemplatePathAndFilename($actionName = NULL) {
 		if ($this->templatePathAndFilename !== NULL) {
@@ -215,7 +214,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 				return $templatePathAndFilename;
 			}
 		}
-		throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException('Template could not be loaded. I tried "' . implode('", "', $paths) . '"', 1225709595);
+		throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException('Template could not be loaded. I tried "' . implode('", "', $paths) . '"', 1225709595);
 	}
 
 	/**
@@ -243,7 +242,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 *
 	 * @param string $layoutName Name of the layout to use. If none given, use "Default"
 	 * @return string Path and filename of layout files
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	protected function getLayoutPathAndFilename($layoutName = 'Default') {
 		if ($this->layoutPathAndFilename !== NULL) {
@@ -257,7 +256,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 				return $layoutPathAndFilename;
 			}
 		}
-		throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException('The template files "' . implode('", "', $paths) . '" could not be loaded.', 1225709595);
+		throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException('The template files "' . implode('", "', $paths) . '" could not be loaded.', 1225709595);
 	}
 
 	/**
@@ -280,7 +279,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 	 *
 	 * @param string $partialName The name of the partial
 	 * @return string the full path which should be used. The path definitely exists.
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	protected function getPartialPathAndFilename($partialName) {
 		$paths = $this->expandGenericPathPattern($this->partialPathAndFilenamePattern, TRUE, TRUE);
@@ -290,7 +289,7 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 				return $partialPathAndFilename;
 			}
 		}
-		throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException('The template files "' . implode('", "', $paths) . '" could not be loaded.', 1225709595);
+		throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException('The template files "' . implode('", "', $paths) . '" could not be loaded.', 1225709595);
 	}
 
 	/**
