@@ -2,7 +2,7 @@
 namespace TYPO3\Base\View;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  	 package "Base".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -12,9 +12,9 @@ namespace TYPO3\Base\View;
  *                                                                        */
 
 /**
- * Abstract Fluid Template View.
+ * Abstract Base Template View.
  *
- * Contains the fundamental methods which any Fluid based template view needs.
+ * Contains the fundamental methods which any Base based template view needs.
  */
 abstract class AbstractTemplateView {
 
@@ -29,12 +29,12 @@ abstract class AbstractTemplateView {
 	
 
 	/**
-	 * @var \TYPO3\Fluid\Core\Parser\TemplateParser
+	 * @var \TYPO3\Base\Core\Parser\TemplateParser
 	 */
 	protected $templateParser;
 
 	/**
-	 * @var \TYPO3\Fluid\Core\Compiler\TemplateCompiler
+	 * @var \TYPO3\Base\Core\Compiler\TemplateCompiler
 	 */
 	protected $templateCompiler;
 
@@ -43,7 +43,7 @@ abstract class AbstractTemplateView {
 	 * Due to the rendering stack, another rendering context might be active
 	 * at certain points while rendering the template.
 	 *
-	 * @var \TYPO3\Fluid\Core\Rendering\RenderingContextInterface
+	 * @var \TYPO3\Base\Core\Rendering\RenderingContextInterface
 	 */
 	protected $baseRenderingContext;
 
@@ -69,28 +69,28 @@ abstract class AbstractTemplateView {
 	/**
 	 * Inject the Template Parser
 	 *
-	 * @param \TYPO3\Fluid\Core\Parser\TemplateParser $templateParser The template parser
+	 * @param \TYPO3\Base\Core\Parser\TemplateParser $templateParser The template parser
 	 * @return void
 	 */
-	public function injectTemplateParser(\TYPO3\Fluid\Core\Parser\TemplateParser $templateParser) {
+	public function injectTemplateParser(\TYPO3\Base\Core\Parser\TemplateParser $templateParser) {
 		$this->templateParser = $templateParser;
 	}
 
 	/**
-	 * @param \TYPO3\Fluid\Core\Compiler\TemplateCompiler $templateCompiler
+	 * @param \TYPO3\Base\Core\Compiler\TemplateCompiler $templateCompiler
 	 * @return void
 	 */
-	public function injectTemplateCompiler(\TYPO3\Fluid\Core\Compiler\TemplateCompiler $templateCompiler) {
+	public function injectTemplateCompiler(\TYPO3\Base\Core\Compiler\TemplateCompiler $templateCompiler) {
 		$this->templateCompiler = $templateCompiler;
 	}
 
 	/**
 	 * Injects a fresh rendering context
 	 *
-	 * @param \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @param \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext
 	 * @return void
 	 */
-	public function setRenderingContext(\TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
+	public function setRenderingContext(\TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext) {
 		$this->baseRenderingContext = $renderingContext;
 		$this->baseRenderingContext->getViewHelperVariableContainer()->setView($this);
 		$this->controllerContext = $renderingContext->getControllerContext();
@@ -98,15 +98,13 @@ abstract class AbstractTemplateView {
 
 	
 
-	//PLACEHOLDER
-	// Here, the backporter can insert the initializeView method, which is needed for Fluid v4.
 
 	/**
 	 * Assign a value to the variable container.
 	 *
 	 * @param string $key The key of a view variable to set
 	 * @param mixed $value The value of the view variable
-	 * @return \TYPO3\Fluid\View\AbstractTemplateView the instance of this view to allow chaining
+	 * @return \TYPO3\Base\View\AbstractTemplateView the instance of this view to allow chaining
 	 * @api
 	 */
 	public function assign($key, $value) {
@@ -123,7 +121,7 @@ abstract class AbstractTemplateView {
 	 * However, only the key "value" is accepted.
 	 *
 	 * @param array $values Keys and values - only a value with key "value" is considered
-	 * @return \TYPO3\Fluid\View\AbstractTemplateView the instance of this view to allow chaining
+	 * @return \TYPO3\Base\View\AbstractTemplateView the instance of this view to allow chaining
 	 * @api
 	 */
 	public function assignMultiple(array $values) {
@@ -189,7 +187,7 @@ abstract class AbstractTemplateView {
 	 * @param array $variables The variables to use
 	 * @param boolean $ignoreUnknown Ignore an unknown section and just return an empty string
 	 * @return string rendered template for the section
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidSectionException
+	 * @throws \TYPO3\Base\View\Exception\InvalidSectionException
 	 */
 	public function renderSection($sectionName, array $variables = NULL, $ignoreUnknown = FALSE) {
 		$renderingContext = $this->getCurrentRenderingContext();
@@ -202,7 +200,7 @@ abstract class AbstractTemplateView {
 			// in case we render a layout right now, we will render a section inside a TEMPLATE.
 			$renderingTypeOnNextLevel = self::RENDERING_TEMPLATE;
 		} else {
-			$variableContainer = $this->objectManager->get('TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer', $variables);
+			$variableContainer = $this->objectManager->get('TYPO3\Base\Core\ViewHelper\TemplateVariableContainer', $variables);
 			$renderingContext = clone $renderingContext;
 			$renderingContext->injectTemplateVariableContainer($variableContainer);
 			$renderingTypeOnNextLevel = $this->getCurrentRenderingType();
@@ -225,12 +223,12 @@ abstract class AbstractTemplateView {
 				if ($ignoreUnknown) {
 					return '';
 				} else {
-					throw new \TYPO3\Fluid\View\Exception\InvalidSectionException(sprintf('Could not render unknown section "%s" in %s used by %s.', $sectionName, get_class($this), $controllerObjectName), 1227108982);
+					throw new \TYPO3\Base\View\Exception\InvalidSectionException(sprintf('Could not render unknown section "%s" in %s used by %s.', $sectionName, get_class($this), $controllerObjectName), 1227108982);
 				}
 			}
 			$section = $sections[$sectionName];
 
-			$renderingContext->getViewHelperVariableContainer()->add('TYPO3\Fluid\ViewHelpers\SectionViewHelper', 'isCurrentlyRenderingSection', 'TRUE');
+			$renderingContext->getViewHelperVariableContainer()->add('TYPO3\Base\ViewHelpers\SectionViewHelper', 'isCurrentlyRenderingSection', 'TRUE');
 
 			$this->startRendering($renderingTypeOnNextLevel, $parsedTemplate, $renderingContext);
 			$output = $section->evaluate($renderingContext);
@@ -276,7 +274,7 @@ abstract class AbstractTemplateView {
 	 * @param string $partialName
 	 * @param string $sectionName
 	 * @param array $variables
-	 * @param \TYPO3\Fluid\Core\ViewHelper\ViewHelperVariableContainer $viewHelperVariableContainer the View Helper Variable container to use.
+	 * @param \TYPO3\Base\Core\ViewHelper\ViewHelperVariableContainer $viewHelperVariableContainer the View Helper Variable container to use.
 	 * @return string
 	 */
 	public function renderPartial($partialName, $sectionName, array $variables) {
@@ -294,7 +292,7 @@ abstract class AbstractTemplateView {
 			}
 		}
 
-		$variableContainer = $this->objectManager->get('TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer', $variables);
+		$variableContainer = $this->objectManager->get('TYPO3\Base\Core\ViewHelper\TemplateVariableContainer', $variables);
 		$renderingContext = clone $this->getCurrentRenderingContext();
 		$renderingContext->injectTemplateVariableContainer($variableContainer);
 
@@ -324,7 +322,7 @@ abstract class AbstractTemplateView {
 	 *
 	 * @param string $actionName Name of the action. If NULL, will be taken from request.
 	 * @return string Full path to template
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException in case the template was not found
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException in case the template was not found
 	 */
 	abstract protected function getTemplateSource($actionName = NULL);
 
@@ -347,7 +345,7 @@ abstract class AbstractTemplateView {
 	 *
 	 * @param string $layoutName Name of the layout to use. If none given, use "Default"
 	 * @return string Path and filename of layout file
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	abstract protected function getLayoutSource($layoutName = 'Default');
 
@@ -365,20 +363,20 @@ abstract class AbstractTemplateView {
 	 *
 	 * @param string $partialName The name of the partial
 	 * @return string the full path which should be used. The path definitely exists.
-	 * @throws \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+	 * @throws \TYPO3\Base\View\Exception\InvalidTemplateResourceException
 	 */
 	abstract protected function getPartialSource($partialName);
 
 	/**
 	 * Build parser configuration
 	 *
-	 * @return \TYPO3\Fluid\Core\Parser\Configuration
+	 * @return \TYPO3\Base\Core\Parser\Configuration
 	 */
 	protected function buildParserConfiguration() {
-		$parserConfiguration = $this->objectManager->get('TYPO3\Fluid\Core\Parser\Configuration');
+		$parserConfiguration = $this->objectManager->get('TYPO3\Base\Core\Parser\Configuration');
 		if (in_array($this->controllerContext->getRequest()->getFormat(), array('html', NULL))) {
-			$parserConfiguration->addInterceptor($this->objectManager->get('TYPO3\Fluid\Core\Parser\Interceptor\Escape'));
-			$parserConfiguration->addInterceptor($this->objectManager->get('TYPO3\Fluid\Core\Parser\Interceptor\Resource'));
+			$parserConfiguration->addInterceptor($this->objectManager->get('TYPO3\Base\Core\Parser\Interceptor\Escape'));
+			$parserConfiguration->addInterceptor($this->objectManager->get('TYPO3\Base\Core\Parser\Interceptor\Resource'));
 		}
 		return $parserConfiguration;
 	}
@@ -387,11 +385,11 @@ abstract class AbstractTemplateView {
 	 * Start a new nested rendering. Pushes the given information onto the $renderingStack.
 	 *
 	 * @param integer $type one of the RENDERING_* constants
-	 * @param \TYPO3\Fluid\Core\Parser\ParsedTemplateInterface $parsedTemplate
-	 * @param \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @param \TYPO3\Base\Core\Parser\ParsedTemplateInterface $parsedTemplate
+	 * @param \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext
 	 * @return void
 	 */
-	protected function startRendering($type, \TYPO3\Fluid\Core\Parser\ParsedTemplateInterface $parsedTemplate, \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
+	protected function startRendering($type, \TYPO3\Base\Core\Parser\ParsedTemplateInterface $parsedTemplate, \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext) {
 		array_push($this->renderingStack, array('type' => $type, 'parsedTemplate' => $parsedTemplate, 'renderingContext' => $renderingContext));
 	}
 
@@ -418,7 +416,7 @@ abstract class AbstractTemplateView {
 	/**
 	 * Get the parsed template which is currently being rendered.
 	 *
-	 * @return \TYPO3\Fluid\Core\Parser\ParsedTemplateInterface
+	 * @return \TYPO3\Base\Core\Parser\ParsedTemplateInterface
 	 */
 	protected function getCurrentParsedTemplate() {
 		$currentRendering = end($this->renderingStack);
@@ -428,7 +426,7 @@ abstract class AbstractTemplateView {
 	/**
 	 * Get the rendering context which is currently used.
 	 *
-	 * @return \TYPO3\Fluid\Core\Rendering\RenderingContextInterface
+	 * @return \TYPO3\Base\Core\Rendering\RenderingContextInterface
 	 */
 	protected function getCurrentRenderingContext() {
 		$currentRendering = end($this->renderingStack);
