@@ -16,7 +16,7 @@ namespace TYPO3\Base\View;
  *
  * @api
  */
-class Exception extends \TYPO3\Fluid\Exception {
+class Exception extends \TYPO3\Base\Exception {
 }
 
 ?>
