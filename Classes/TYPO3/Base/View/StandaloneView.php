@@ -2,7 +2,7 @@
 namespace TYPO3\Base\View;
 
 /* *
-* This script belongs to the TYPO3 Flow package "Fluid". *
+* This script belongs to the TYPO3 Flow package "Base". *
 * *
 * It is free software; you can redistribute it and/or modify it under *
 * the terms of the GNU Lesser General Public License, either version 3 *
@@ -16,39 +16,39 @@ namespace TYPO3\Base\View;
 
 /**
 * A standalone template view.
-* Helpful if you want to use Fluid separately from MVC
+* Helpful if you want to use Base separately from MVC
 * E.g. to generate template based emails.
 *
 * @api
 */
-abstract class StandaloneView extends \TYPO3\Fluid\View\AbstractTemplateView {
+abstract class StandaloneView extends \TYPO3\Base\View\AbstractTemplateView {
 
   /**
-* Source code of the Fluid template
+* Source code of the Base template
 * @var string
 */
 protected $templateSource = NULL;
 
 /**
-* absolute path of the Fluid templPO3ate
+* absolute path of the Base templPO3ate
 * @var string
 */
 protected $templatePathAndFilename = NULL;
 
 /**
-* absolute root path of the folder that contains Fluid layouts
+* absolute root path of the folder that contains Base layouts
 * @var string
 */
 protected $layoutRootPath = NULL;
 
 /**
-* absolute root path of the folder that contains Fluid partials
+* absolute root path of the folder that contains Base partials
 * @var string
 */
 protected $partialRootPath = NULL;
 
 /**
-* @var \TYPO3\Fluid\Core\Compiler\TemplateCompiler
+* @var \TYPO3\Base\Core\Compiler\TemplateCompiler
 */
 protected $templateCompiler;
 
@@ -79,11 +79,11 @@ protected $request;
 protected $format = 'html';
 
 public function __construct() {
-$this->objectManager = new \TYPO3\Fluid\Object\ObjectManager();
-$this->templateCompiler = $this->objectManager->get('TYPO3\\Fluid\\Core\\Compiler\\TemplateCompiler');
-$this->templateParser = $this->objectManager->get('TYPO3\\Fluid\\Core\\Parser\\TemplateParser');
+$this->objectManager = new \TYPO3\Base\Object\ObjectManager();
+$this->templateCompiler = $this->objectManager->get('TYPO3\\Base\\Core\\Compiler\\TemplateCompiler');
+$this->templateParser = $this->objectManager->get('TYPO3\\Base\\Core\\Parser\\TemplateParser');
 $this->request = $request;
-$this->setRenderingContext($this->objectManager->create('TYPO3\\Fluid\\Core\\Rendering\\RenderingContext'));
+$this->setRenderingContext($this->objectManager->create('TYPO3\\Base\\Core\\Rendering\\RenderingContext'));
 
 
 }
@@ -120,9 +120,9 @@ return $this->controllerContext->getRequest();
 }
 
 /**
-* Sets the absolute path to a Fluid template file
+* Sets the absolute path to a Base template file
 *
-* @param string $templatePathAndFilename Fluid template path
+* @param string $templatePathAndFilename Base template path
 * @return void
 * @api
 */
@@ -131,9 +131,9 @@ $this->templatePathAndFilename = $templatePathAndFilename;
 }
 
 /**
-* Returns the absolute path to a Fluid template file if it was specified with setTemplatePathAndFilename() before
+* Returns the absolute path to a Base template file if it was specified with setTemplatePathAndFilename() before
 *
-* @return string Fluid template path
+* @return string Base template path
 * @api
 */
 public function getTemplatePathAndFilename() {
@@ -141,10 +141,10 @@ return $this->templatePathAndFilename;
 }
 
 /**
-* Sets the Fluid template source
+* Sets the Base template source
 * You can use setTemplatePathAndFilename() alternatively if you only want to specify the template path
 *
-* @param string $templateSource Fluid template source code
+* @param string $templateSource Base template source code
 * @return void
 * @api
 */
@@ -153,9 +153,9 @@ $this->templateSource = $templateSource;
 }
 
 /**
-* Sets the absolute path to the folder that contains Fluid layout files
+* Sets the absolute path to the folder that contains Base layout files
 *
-* @param string $layoutRootPath Fluid layout root path
+* @param string $layoutRootPath Base layout root path
 * @return void
 * @api
 */
@@ -164,9 +164,9 @@ $this->layoutRootPath = $layoutRootPath;
 }
 
 /**
-* Returns the absolute path to the folder that contains Fluid layout files
+* Returns the absolute path to the folder that contains Base layout files
 *
-* @return string Fluid layout root path
+* @return string Base layout root path
 * @throws Exception\InvalidTemplateResourceException
 * @api
 */
@@ -181,9 +181,9 @@ return $this->layoutRootPath;
 }
 
 /**
-* Sets the absolute path to the folder that contains Fluid partial files.
+* Sets the absolute path to the folder that contains Base partial files.
 *
-* @param string $partialRootPath Fluid partial root path
+* @param string $partialRootPath Base partial root path
 * @return void
 * @api
 */
@@ -192,9 +192,9 @@ $this->partialRootPath = $partialRootPath;
 }
 
 /**
-* Returns the absolute path to the folder that contains Fluid partial files
+* Returns the absolute path to the folder that contains Base partial files
 *
-* @return string Fluid partial root path
+* @return string Base partial root path
 * @throws Exception\InvalidTemplateResourceException
 * @api
 */
@@ -235,9 +235,9 @@ protected function getTemplateIdentifier($actionName = NULL) {
 if ($this->templateSource === NULL) {
 $templatePathAndFilename = $this->getTemplatePathAndFilename();
 if ($templatePathAndFilename === NULL) {
-throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException('Neither TemplateSource nor TemplatePathAndFilename have been specified', 1327431077);
+throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException('Neither TemplateSource nor TemplatePathAndFilename have been specified', 1327431077);
 } elseif (!file_exists($templatePathAndFilename)) {
-throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException(sprintf('Template file "%s" could not be loaded', $templatePathAndFilename), 1327431091);
+throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException(sprintf('Template file "%s" could not be loaded', $templatePathAndFilename), 1327431091);
 }
 $templatePathAndFilenameInfo = pathinfo($templatePathAndFilename);
 $templateFilenameWithoutExtension = basename($templatePathAndFilename, '.' . $templatePathAndFilenameInfo['extension']);
@@ -252,10 +252,10 @@ return $templateIdentifier;
 }
 
 /**
-* Returns the Fluid template source code
+* Returns the Base template source code
 *
 * @param string $actionName Name of the action. This argument is not used in this view!
-* @return string Fluid template source
+* @return string Base template source
 * @throws Exception\InvalidTemplateResourceException
 */
 protected function getTemplateSource($actionName = NULL) {
@@ -370,7 +370,7 @@ return $partialSource;
 protected function getPartialPathAndFilename($partialName) {
 $partialRootPath = $this->getPartialRootPath();
 if (!is_dir($partialRootPath)) {
-throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException('Partial root path "' . $partialRootPath . '" does not exist.', 1288094648);
+throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException('Partial root path "' . $partialRootPath . '" does not exist.', 1288094648);
 }
 $possiblePartialPaths = array();
 $possiblePartialPaths[] = $partialRootPath . '/' . $partialName . '.' . $this->getFormat();
@@ -380,7 +380,7 @@ if (file_exists($partialPathAndFilename)) {
 return $partialPathAndFilename;
 }
 }
-throw new \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException('Could not load partial file. Tried following paths: "' . implode('", "', $possiblePartialPaths) . '".', 1288092555);
+throw new \TYPO3\Base\View\Exception\InvalidTemplateResourceException('Could not load partial file. Tried following paths: "' . implode('", "', $possiblePartialPaths) . '".', 1288092555);
 }
 
 
