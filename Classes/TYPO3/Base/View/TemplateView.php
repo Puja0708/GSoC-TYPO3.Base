@@ -16,7 +16,7 @@ namespace TYPO3\Base\View;
  *
  * @api
  */
-class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
+class TemplateView extends \TYPO3\Base\View\AbstractTemplateView implements \TYPO3\Base\View\ViewInterface{
 
 	/**
 	 * Pattern to be resolved for "@templateRoot" in the other patterns.
@@ -376,6 +376,16 @@ class TemplateView extends \TYPO3\Base\View\AbstractTemplateView {
 		$templateModifiedTimestamp = filemtime($pathAndFilename);
 		$templateIdentifier = sprintf('%s_%s_%s_%s', $packageKey, $controllerName, $prefix, sha1($pathAndFilename . '|' . $templateModifiedTimestamp));
 		return $templateIdentifier;
+	}
+
+	/**
+	 * Initializes this view.
+	 *
+	 * @return void
+	 * @api
+	 */
+	public function initializeView(){
+		;
 	}
 }
 
