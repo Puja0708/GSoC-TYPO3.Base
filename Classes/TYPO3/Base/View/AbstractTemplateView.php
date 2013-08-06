@@ -16,7 +16,7 @@ namespace TYPO3\Base\View;
  *
  * Contains the fundamental methods which any Base based template view needs.
  */
-abstract class AbstractTemplateView {
+abstract class AbstractTemplateView implements \TYPO3\Base\View\ViewInterface{
 
 	/**
 	 * Constants defining possible rendering types
