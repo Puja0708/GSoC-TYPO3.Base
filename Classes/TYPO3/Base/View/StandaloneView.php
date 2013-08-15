@@ -11,9 +11,6 @@ namespace TYPO3\Base\View;
 * The TYPO3 project - inspiring people to share! *
 * */
 
-//use TYPO3\Flow\Annotations as Flow;
-//use TYPO3\Flow\Http\Request;
-
 /**
 * A standalone template view.
 * Helpful if you want to use Base separately from MVC
