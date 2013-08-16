@@ -2,45 +2,43 @@
 namespace TYPO3\Base\ViewHelpers;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Fluid".                      *
+ * This script belongs to the TYPO3 Flow package "Fluid".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
- *  of the License, or (at your option) any later version.                *
+ * of the License, or (at your option) any later version.                 *
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\Fluid\Core\ViewHelper\Exception;
-
 /**
- * Case view helper that is only usable within the SwitchViewHelper.
- * @see \TYPO3\Fluid\ViewHelpers\SwitchViewHelper
+ * View helper which creates a <base href="..."></base> tag. The Base URI
+ * is taken from the current request.
+ * In TYPO3 Flow, you should always include this ViewHelper to make the links work.
+ *
+ * = Examples =
+ *
+ * <code title="Example">
+ * <f:base />
+ * </code>
+ * <output>
+ * <base href="http://yourdomain.tld/" />
+ * (depending on your domain)
+ * </output>
  *
  * @api
  */
-class CaseViewHelper extends AbstractViewHelper {
+class BaseViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper {
 
 	/**
-	 * @param mixed $value
-	 * @return string the contents of this view helper if $value equals the expression of the surrounding switch view helper, otherwise an empty string
-	 * @throws \TYPO3\Fluid\Core\ViewHelper\Exception
+	 * Render the "Base" tag by outputting $httpRequest->getBaseUri()
+	 *
+	 * @return string "base"-Tag.
 	 * @api
 	 */
-	public function render($value) {
-		$viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
-		if (!$viewHelperVariableContainer->exists('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
-			throw new Exception('The case View helper can only be used within a switch View helper', 1368112037);
-		}
-		$switchExpression = $viewHelperVariableContainer->get('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression');
-
-		// non-type-safe comparison by intention
-		if ($switchExpression == $value) {
-			$viewHelperVariableContainer->addOrUpdate('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break', TRUE);
-			return $this->renderChildren();
-		}
-		return '';
+	public function render() {
+		return '<base href="' . $this->controllerContext->getRequest()->getHttpRequest()->getBaseUri() . '" />';
 	}
 }
+
 ?>
