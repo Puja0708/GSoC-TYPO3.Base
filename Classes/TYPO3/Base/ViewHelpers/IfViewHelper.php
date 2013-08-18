@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Base".		    		             *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -84,7 +84,7 @@ namespace TYPO3\Base\ViewHelpers;
  * @see \TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode::convertArgumentValue()
  * @api
  */
-class IfViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
+class IfViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractConditionViewHelper {
 
 	/**
 	 * Renders <f:then> child if $condition is true, otherwise renders <f:else> child.
