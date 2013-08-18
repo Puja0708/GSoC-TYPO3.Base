@@ -2,127 +2,116 @@
 namespace TYPO3\Base\ViewHelpers;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "TYPO3.Fluid".                *
+ * This script belongs to the TYPO3  package "Base".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
- *  of the License, or (at your option) any later version.                *
+ * of the License, or (at your option) any later version.                 *
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface;
-
 /**
- * Switch view helper which can be used to render content depending on a value or expression.
- * Implements what a basic switch()-PHP-method does.
+ * A Section view helper
  *
- * = Examples =
+ * == Examples ==
  *
- * <code title="Simple Switch statement">
- * <f:switch expression="{person.gender}">
- *   <f:case value="male">Mr.</f:case>
- *   <f:case value="female">Mrs.</f:case>
- * </f:switch>
+ * <code title="Rendering sections">
+ * <f:section name="someSection">This is a section. {foo}</f:section>
+ * <f:render section="someSection" arguments="{foo: someVariable}" />
  * </code>
  * <output>
- * Mr. / Mrs. (depending on the value of {person.gender})
+ * the content of the section "someSection". The content of the variable {someVariable} will be available in the partial as {foo}
  * </output>
  *
- * Note: Using this view helper can be a sign of weak architecture. If you end up using it extensively
- * you might want to consider restructuring your controllers/actions and/or use partials and sections.
- * E.g. the above example could be achieved with <f:render partial="title.{person.gender}" /> and the partials
- * "title.male.html", "title.female.html", ...
- * Depending on the scenario this can be easier to extend and possibly contains less duplication.
+ * <code title="Rendering recursive sections">
+ * <f:section name="mySection">
+ *  <ul>
+ *    <f:for each="{myMenu}" as="menuItem">
+ *      <li>
+ *        {menuItem.text}
+ *        <f:if condition="{menuItem.subItems}">
+ *          <f:render section="mySection" arguments="{myMenu: menuItem.subItems}" />
+ *        </f:if>
+ *      </li>
+ *    </f:for>
+ *  </ul>
+ * </f:section>
+ * <f:render section="mySection" arguments="{myMenu: menu}" />
+ * </code>
+ * <output>
+ * <ul>
+ *   <li>menu1
+ *     <ul>
+ *       <li>menu1a</li>
+ *       <li>menu1b</li>
+ *     </ul>
+ *   </li>
+ * [...]
+ * (depending on the value of {menu})
+ * </output>
  *
  * @api
  */
-class SwitchViewHelper extends AbstractViewHelper implements ChildNodeAccessInterface {
+class SectionViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper implements \TYPO3\Fluid\Core\ViewHelper\Facets\PostParseInterface, \TYPO3\Fluid\Core\ViewHelper\Facets\CompilableInterface {
 
 	/**
-	 * An array of \TYPO3\Fluid\Core\Parser\SyntaxTree\AbstractNode
-	 * @var array
-	 */
-	private $childNodes = array();
-
-	/**
-	 * @var mixed
-	 */
-	protected $backupSwitchExpression = NULL;
-
-	/**
-	 * @var boolean
-	 */
-	protected $backupBreakState = FALSE;
-
-	/**
-	 * Setter for ChildNodes - as defined in ChildNodeAccessInterface
+	 * Initialize the arguments.
 	 *
-	 * @param array $childNodes Child nodes of this syntax tree node
 	 * @return void
-	 */
-	public function setChildNodes(array $childNodes) {
-		$this->childNodes = $childNodes;
-	}
-
-	/**
-	 * @param mixed $expression
-	 * @return string the rendered string
 	 * @api
 	 */
-	public function render($expression) {
-		$content = '';
-		$this->backupSwitchState();
-		$templateVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
-
-		$templateVariableContainer->addOrUpdate('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression', $expression);
-		$templateVariableContainer->addOrUpdate('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break', FALSE);
-
-		foreach ($this->childNodes as $childNode) {
-			if (!$childNode instanceof ViewHelperNode || $childNode->getViewHelperClassName() !== 'TYPO3\Fluid\ViewHelpers\CaseViewHelper') {
-				continue;
-			}
-			$content = $childNode->evaluate($this->renderingContext);
-			if ($templateVariableContainer->get('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break') === TRUE) {
-				break;
-			}
-		}
-
-		$templateVariableContainer->remove('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression');
-		$templateVariableContainer->remove('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break');
-
-		$this->restoreSwitchState();
-		return $content;
+	public function initializeArguments() {
+		$this->registerArgument('name', 'string', 'Name of the section', TRUE);
 	}
 
 	/**
-	 * Backups "switch expression" and "break" state of a possible parent switch ViewHelper to support nesting
+	 * Save the associated view helper node in a static public class variable.
+	 * called directly after the view helper was built.
 	 *
+	 * @param \TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode $syntaxTreeNode
+	 * @param array $viewHelperArguments
+	 * @param \TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer $variableContainer
 	 * @return void
 	 */
-	protected function backupSwitchState() {
-		if ($this->renderingContext->getViewHelperVariableContainer()->exists('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression')) {
-			$this->backupSwitchExpression = $this->renderingContext->getViewHelperVariableContainer()->get('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression');
+	static public function postParseEvent(\TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode $syntaxTreeNode, array $viewHelperArguments, \TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer $variableContainer) {
+		$sectionName = $viewHelperArguments['name']->getText();
+		if (!$variableContainer->exists('sections')) {
+			$variableContainer->add('sections', array());
 		}
-		if ($this->renderingContext->getViewHelperVariableContainer()->exists('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break')) {
-			$this->backupBreakState = $this->renderingContext->getViewHelperVariableContainer()->get('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break');
-		}
+		$sections = $variableContainer->get('sections');
+		$sections[$sectionName] = $syntaxTreeNode;
+		$variableContainer->remove('sections');
+		$variableContainer->add('sections', $sections);
 	}
 
 	/**
-	 * Restores "switch expression" and "break" states that might have been backed up in backupSwitchState() before
+	 * Rendering directly returns all child nodes.
 	 *
-	 * @return void
+	 * @return string HTML String of all child nodes.
+	 * @api
 	 */
-	protected function restoreSwitchState() {
-		if ($this->backupSwitchExpression !== NULL) {
-			$this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'switchExpression', $this->backupSwitchExpression);
+	public function render() {
+		if ($this->viewHelperVariableContainer->exists('TYPO3\Fluid\ViewHelpers\SectionViewHelper', 'isCurrentlyRenderingSection')) {
+			$this->viewHelperVariableContainer->remove('TYPO3\Fluid\ViewHelpers\SectionViewHelper', 'isCurrentlyRenderingSection');
+			return $this->renderChildren();
 		}
-		if ($this->backupBreakState !== FALSE) {
-			$this->renderingContext->getViewHelperVariableContainer()->addOrUpdate('TYPO3\Fluid\ViewHelpers\SwitchViewHelper', 'break', TRUE);
-		}
+		return '';
+	}
+
+	/**
+	 * The inner contents of a section should not be rendered.
+	 *
+	 * @param string $argumentsVariableName
+	 * @param string $renderChildrenClosureVariableName
+	 * @param string $initializationPhpCode
+	 * @param \TYPO3\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode
+	 * @param \TYPO3\Fluid\Core\Compiler\TemplateCompiler $templateCompiler
+	 * @return string
+	 */
+	public function compile($argumentsVariableName, $renderChildrenClosureVariableName, &$initializationPhpCode, \TYPO3\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode, \TYPO3\Fluid\Core\Compiler\TemplateCompiler $templateCompiler) {
+		return '\'\'';
 	}
 }
+
 ?>
