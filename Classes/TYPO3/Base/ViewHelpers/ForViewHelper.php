@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * ThisF script belongs to the TYPO3  package "Base".		           	      *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -58,7 +58,7 @@ namespace TYPO3\Base\ViewHelpers;
  *
  * @api
  */
-class ForViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\Fluid\Core\ViewHelper\Facets\CompilableInterface {
+class ForViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper implements \TYPO3\Base\Core\ViewHelper\Facets\CompilableInterface {
 
 	/**
 	 * Iterates through elements of $each and renders child nodes
