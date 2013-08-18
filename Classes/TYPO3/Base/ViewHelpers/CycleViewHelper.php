@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Base". 		  	              *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -47,7 +47,7 @@ namespace TYPO3\Base\ViewHelpers;
  *
  * @api
  */
-class CycleViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
+class CycleViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * The values to be iterated through
