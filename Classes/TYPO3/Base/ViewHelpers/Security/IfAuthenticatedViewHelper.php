@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Security;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3 package "Base".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -43,21 +43,13 @@ namespace TYPO3\Base\ViewHelpers\Security;
  *
  * @api
  */
-class IfAuthenticatedViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
+class IfAuthenticatedViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractConditionViewHelper {
 	/**
-	 * @var \TYPO3\Flow\Security\Context
+	 * @var String
 	 */
 	protected $securityContext;
 
-	/**
-	 * Injects the Security Context
-	 *
-	 * @param \TYPO3\Flow\Security\Context $securityContext
-	 * @return void
-	 */
-	public function injectSecurityContext(\TYPO3\Flow\Security\Context $securityContext) {
-		$this->securityContext = $securityContext;
-	}
+	
 
 	/**
 	 * Renders <f:then> child if any account is currently authenticated, otherwise renders <f:else> child.
