@@ -2,7 +2,7 @@
 namespace TYPO3\Base\ViewHelpers\Security;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Base".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,9 +11,7 @@ namespace TYPO3\Base\ViewHelpers\Security;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+use TYPO3\Base\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
  * This view helper implements an ifHasRole/else condition.
@@ -60,8 +58,7 @@ use TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 class IfHasRoleViewHelper extends AbstractConditionViewHelper {
 
 	/**
-	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Security\Context
+	 * @var String
 	 */
 	protected $securityContext;
 
