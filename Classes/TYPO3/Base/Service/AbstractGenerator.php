@@ -2,7 +2,7 @@
 namespace TYPO3\Base\Service;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Base".                 *
+ * This script belongs to the TYPO3  package "Base".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,42 +11,16 @@ namespace TYPO3\Base\Service;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+
 
 /**
  * Common base class for XML generators.
  */
 abstract class AbstractGenerator {
 
-	/**
-	 * The reflection class for AbstractViewHelper. Is needed quite often, that's why we use a pre-initialized one.
-	 *
-	 * @var \TYPO3\Flow\Reflection\ClassReflection
-	 */
-	protected $abstractViewHelperReflectionClass;
+	
 
-	/**
-	 * The doc comment parser.
-	 *
-	 * @var \TYPO3\Flow\Reflection\DocCommentParser
-	 * @Flow\Inject
-	 */
-	protected $docCommentParser;
-
-	/**
-	 * @var \TYPO3\Flow\Reflection\ReflectionService
-	 * @Flow\Inject
-	 */
-	protected $reflectionService;
-
-	/**
-	 * Constructor. Sets $this->abstractViewHelperReflectionClass
-	 *
-	 */
-	public function __construct() {
-		\TYPO3\Base\Base::$debugMode = TRUE; // We want ViewHelper argument documentation
-		$this->abstractViewHelperReflectionClass = new \TYPO3\Flow\Reflection\ClassReflection('TYPO3\Base\Core\ViewHelper\AbstractViewHelper');
-	}
+	
 
 	/**
 	 * Get all class names inside this namespace and return them as array.
