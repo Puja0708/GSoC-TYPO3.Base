@@ -2,7 +2,7 @@
 namespace TYPO3\Base\Service;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Base".                 *
+ * This script belongs to the TYPO3 package "Fluid".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -24,8 +24,8 @@ class DocbookGenerator extends \TYPO3\Base\Service\AbstractGenerator {
 	 * @return string XML Schema definition
 	 */
 	public function generateDocbook($namespace) {
-		if (substr($namespace, -1) !== \TYPO3\Base\Base::NAMESPACE_SEPARATOR) {
-			$namespace .= \TYPO3\Base\Base::NAMESPACE_SEPARATOR;
+		if (substr($namespace, -1) !== \TYPO3\Fluid\Fluid::NAMESPACE_SEPARATOR) {
+			$namespace .= \TYPO3\Fluid\Fluid::NAMESPACE_SEPARATOR;
 		}
 
 		$classNames = $this->getClassNamesInNamespace($namespace);
@@ -51,35 +51,7 @@ class DocbookGenerator extends \TYPO3\Base\Service\AbstractGenerator {
 		return $xmlRootNode->asXML();
 	}
 
-	/**
-	 * Generate the XML Schema for a given class name.
-	 *
-	 * @param string $className Class name to generate the schema for.
-	 * @param string $namespace Namespace prefix. Used to split off the first parts of the class name.
-	 * @param \SimpleXMLElement $xmlRootNode XML root node where the xsd:element is appended.
-	 * @return void
-	 */
-	protected function generateXmlForClassName($className, $namespace, \SimpleXMLElement $xmlRootNode) {
-		$reflectionClass = new \TYPO3\Flow\Reflection\ClassReflection($className);
-		if (!$reflectionClass->isSubclassOf($this->abstractViewHelperReflectionClass)) {
-			return;
-		}
-
-		$tagName = $this->getTagNameForClass($className, $namespace);
-
-		$docbookSection = $xmlRootNode->addChild('section');
-
-		$docbookSection->addChild('title', $tagName);
-		$this->docCommentParser->parseDocComment($reflectionClass->getDocComment());
-		$this->addDocumentation($this->docCommentParser->getDescription(), $docbookSection);
-
-		$argumentsSection = $docbookSection->addChild('section');
-		$argumentsSection->addChild('title', 'Arguments');
-		$this->addArguments($className, $argumentsSection);
-
-		return $docbookSection;
-	}
-
+	
 	/**
 	 * Add attribute descriptions to a given tag.
 	 * Initializes the view helper and its arguments, and then reads out the list of arguments.
