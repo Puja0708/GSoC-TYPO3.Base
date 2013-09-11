@@ -2,7 +2,7 @@
 namespace TYPO3\Base\Core\Widget;
 
 /*
- * This script belongs to the TYPO3 Flow package "Fluid".                 *
+ * This script belongs to the TYPO3  package "Fluid".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,7 +11,7 @@ namespace TYPO3\Base\Core\Widget;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+
 
 /**
  * This object stores the WidgetContext for the currently active widgets
@@ -19,8 +19,6 @@ use TYPO3\Flow\Annotations as Flow;
  * Widget AJAX requests.
  *
  * This class is only used internally by the widget framework.
- *
- * @Flow\Scope("session")
  */
 class AjaxWidgetContextHolder {
 
@@ -61,7 +59,6 @@ class AjaxWidgetContextHolder {
 	 *
 	 * @param \TYPO3\Fluid\Core\Widget\WidgetContext $widgetContext
 	 * @return void
-	 * @Flow\Session(autoStart=true)
 	 */
 	public function store(\TYPO3\Fluid\Core\Widget\WidgetContext $widgetContext) {
 		$ajaxWidgetId = $this->nextFreeAjaxWidgetId++;
