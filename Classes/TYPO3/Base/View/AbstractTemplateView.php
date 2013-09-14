@@ -25,9 +25,6 @@ abstract class AbstractTemplateView {
 	const RENDERING_PARTIAL = 2;
 	const RENDERING_LAYOUT = 3;
 
-	
-	
-
 	/**
 	 * @var \TYPO3\Base\Core\Parser\TemplateParser
 	 */
@@ -90,7 +87,7 @@ abstract class AbstractTemplateView {
 	 * @param \TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext
 	 * @return void
 	 */
-	public function setRenderingContext(\TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext) {
+	public function setRenderingContext (\TYPO3\Base\Core\Rendering\RenderingContextInterface $renderingContext) {
 		$this->baseRenderingContext = $renderingContext;
 		$this->baseRenderingContext->getViewHelperVariableContainer()->setView($this);
 		$this->controllerContext = $renderingContext->getControllerContext();
