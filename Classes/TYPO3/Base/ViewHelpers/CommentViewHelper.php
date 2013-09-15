@@ -46,7 +46,7 @@ namespace TYPO3\Base\ViewHelpers;
  *
  * @api
  */
-class CommentViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
+class CommentViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @var boolean
