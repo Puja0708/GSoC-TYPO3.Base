@@ -42,7 +42,7 @@ namespace TYPO3\Base\ViewHelpers;
  *
  * @api
  */
-class AliasViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
+class AliasViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Renders alias
