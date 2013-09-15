@@ -19,7 +19,7 @@ use TYPO3\Base\Core\ViewHelper\Exception;
  *
  * @api
  */
-class CaseViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper {
+class CaseViewHelper extends \TYPO3\Base\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @param mixed $value
