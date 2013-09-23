@@ -19,3 +19,4 @@ Some work needs to be done, to get the entire package up and running.
 
 For more details, refer to:
 https://docs.google.com/document/d/1VPAKTWDkmVduLMQcTM9-gZdRE_dP7WNODmyFphI1tSE/
+or the wiki https://github.com/Puja0708/GSoC-TYPO3.Base/wiki/Project-Report
